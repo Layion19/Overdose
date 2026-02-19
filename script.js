@@ -63,10 +63,10 @@ function renderText(text) {
 function computeLayout() {
   const screenWidth = window.innerWidth;
   const screenHeight = window.innerHeight;
-  // Responsive: taille capsule fixe, colonnes qui couvrent tout l'écran
-  const baseCapsuleW = Math.min(130, Math.max(60, screenWidth / 9));
-  capsulesPerRow = Math.round(screenWidth / baseCapsuleW);
-  const capsuleWidth = screenWidth / capsulesPerRow; // largeur exacte sans reste
+  // 130px sur desktop, proportionnel sur mobile, edge-to-edge exact
+  const base = Math.min(130, screenWidth / 8);
+  capsulesPerRow = Math.round(screenWidth / base);
+  const capsuleWidth = screenWidth / capsulesPerRow;
   const coverageHeight = screenHeight * 0.45;
   const rowHeight = capsuleWidth * 0.38;
   maxRows = Math.floor(coverageHeight / rowHeight);
@@ -145,6 +145,9 @@ function spawnCapsuleMirror() {
 /* ================= AUTO MODE ================= */
 
 function startAutoMode() {
+  // Afficher le texte complet avant de commencer
+  renderText(mainText);
+
   // Pluie rapide pour remplir toutes les capsules restantes
   const rainInterval = setInterval(() => {
     const total = capsulesPerRow * maxRows;

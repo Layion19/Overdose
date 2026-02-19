@@ -32,6 +32,11 @@ body {
   height: auto;
   display: block;
   margin: 0 auto;
+  /* Empêche le highlight bleu au clic */
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: none;
 }
 
 /* Text container — always above capsules */
@@ -342,4 +347,66 @@ body.eth-theme .connect-btn {
   background: rgba(255, 255, 255, 0.08);
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+  /* Banner centré au milieu de l'écran comme sur desktop */
+  #experience-layer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #banner {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #banner img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Texte Daily Dose bien visible */
+  #textContainer {
+    top: 3%;
+    font-size: clamp(18px, 5vw, 32px);
+    white-space: normal;
+    width: 90%;
+    max-width: 90vw;
+  }
+
+  /* OVERDOSE≠FUN adapté mobile */
+  .overdose-word {
+    font-size: clamp(24px, 8vw, 48px);
+  }
+
+  .notfun-word {
+    font-size: clamp(12px, 4vw, 24px);
+  }
+
+  /* Header mobile */
+  .platform-header {
+    top: 14px;
+    left: 16px;
+    right: 16px;
+  }
+
+  /* Card mobile */
+  .launch-card {
+    width: 92vw;
+    padding: 24px 20px;
+    gap: 12px;
+  }
+
+  .launch-card h2 {
+    font-size: 22px;
+  }
 }

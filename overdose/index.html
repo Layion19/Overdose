@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OVERDOSE</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="solana-theme">
+
+<!-- ================= EXPERIENCE LAYER ================= -->
+<div id="experience-layer">
+
+  <div id="textContainer"></div>
+
+  <div id="banner">
+    <img src="assets/banner.png" alt="Overdose Banner">
+  </div>
+
+  <!-- Capsules rendered here, isolated from platform -->
+  <div id="capsule-container"></div>
+
+</div>
+
+
+<!-- ================= PLATFORM LAYER ================= -->
+<div id="platform-layer">
+
+  <div class="bg-animation-layer"></div>
+
+  <!-- Header -->
+  <div class="platform-header">
+    <div class="logo-container">
+      <img id="chain-logo" src="assets/solana-logo.png" alt="Chain Logo">
+      <span class="switch-icon" id="switchBtn" title="Switch chain">⇄</span>
+    </div>
+    <button id="connectWalletBtn" class="connect-btn">Connect Wallet</button>
+  </div>
+
+  <!-- Launch Card -->
+  <div class="launch-card">
+    <h2>Launch Your Token</h2>
+    <p class="subtitle">Create a Launch Contract</p>
+
+    <div class="input-group">
+      <label>Token Name</label>
+      <input type="text" placeholder="Enter your token name">
+    </div>
+
+    <div class="input-group">
+      <label>Symbol</label>
+      <input type="text" placeholder="e.g. TOKEN">
+    </div>
+
+    <div class="input-group">
+      <label>Total Supply</label>
+      <input type="number" placeholder="Enter total supply">
+    </div>
+
+    <div class="input-group">
+      <label>Token Logo</label>
+      <input type="file">
+    </div>
+
+    <button id="launchBtn" class="primary-btn">Create Token</button>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

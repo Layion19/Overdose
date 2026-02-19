@@ -63,11 +63,12 @@ function renderText(text) {
 function computeLayout() {
   const screenWidth = window.innerWidth;
   const screenHeight = window.innerHeight;
-  // Responsive : ~10 colonnes sur desktop, ~7 sur mobile
-  const capsuleWidth = Math.round(screenWidth / 10);
-  capsulesPerRow = Math.round(screenWidth / capsuleWidth);
+  // Responsive: taille capsule fixe, colonnes qui couvrent tout l'écran
+  const baseCapsuleW = Math.min(130, Math.max(60, screenWidth / 9));
+  capsulesPerRow = Math.round(screenWidth / baseCapsuleW);
+  const capsuleWidth = screenWidth / capsulesPerRow; // largeur exacte sans reste
   const coverageHeight = screenHeight * 0.45;
-  const rowHeight = capsuleWidth * 0.22;
+  const rowHeight = capsuleWidth * 0.38;
   maxRows = Math.floor(coverageHeight / rowHeight);
   return { capsuleWidth, screenWidth, screenHeight, rowHeight };
 }
@@ -88,17 +89,18 @@ function spawnCapsuleAt(index) {
   const capsule = document.createElement("img");
   capsule.src = "assets/capsule.png";
   capsule.classList.add("capsule");
-  capsule.style.width = capsuleWidth + "px";
+  capsule.style.width = (screenWidth / capsulesPerRow) + "px";
   capsule.style.left = startX + "px";
   capsule.style.top = startY + "px";
   capsule.style.transform = "translate(-50%, -50%)";
   document.getElementById("capsule-container").appendChild(capsule);
 
-  // Edge to edge parfait : pas de marge, pas de débordement
-  const slightRandomX = Math.random() * 3 - 1.5;
+  // Edge to edge parfait : réparti sur toute la largeur écran
+  const slightRandomX = (Math.random() - 0.5) * 3;
   const slightRandomY = Math.random() * 3;
-  const targetX = col * capsuleWidth + slightRandomX;
-  const bottomBase = screenHeight - 60;
+  const exactW = screenWidth / capsulesPerRow; // largeur exacte sans débordement
+  const targetX = col * exactW + slightRandomX;
+  const bottomBase = screenHeight - 40;
   const targetY = bottomBase - (row * rowHeight) - slightRandomY;
 
   requestAnimationFrame(() => {
@@ -117,19 +119,25 @@ function spawnCapsuleAt(index) {
 */
 function spawnCapsuleMirror() {
   computeLayout();
-  const center = Math.floor(capsulesPerRow / 2);
 
-  // Offset depuis le centre basé sur combien de paires ont déjà été placées
+  // Paires à placer par rangée = capsulesPerRow / 2 (arrondi sup)
+  const pairsPerRow = Math.ceil(capsulesPerRow / 2);
   const pairsPlaced = Math.floor(capsuleCount / 2);
-  const row = Math.floor(pairsPlaced / Math.ceil(capsulesPerRow / 2));
-  const offset = pairsPlaced % Math.ceil(capsulesPerRow / 2);
+  const row         = Math.floor(pairsPlaced / pairsPerRow);
+  const offset      = pairsPlaced % pairsPerRow;
 
-  const rowBase = row * capsulesPerRow;
+  // Centre : on part du milieu et on s'écarte
+  const center    = Math.floor((capsulesPerRow - 1) / 2);
+  const rowBase   = row * capsulesPerRow;
+
   const leftIndex  = rowBase + center - offset;
   const rightIndex = rowBase + center + offset + (capsulesPerRow % 2 === 0 ? 1 : 0);
 
-  if (leftIndex >= rowBase) spawnCapsuleAt(leftIndex);
-  if (rightIndex < rowBase + capsulesPerRow && rightIndex !== leftIndex) spawnCapsuleAt(rightIndex);
+  // Toujours dans les bornes de la rangée
+  if (leftIndex >= rowBase && leftIndex < rowBase + capsulesPerRow)
+    spawnCapsuleAt(leftIndex);
+  if (rightIndex < rowBase + capsulesPerRow && rightIndex !== leftIndex)
+    spawnCapsuleAt(rightIndex);
 
   capsuleCount += 2;
 }

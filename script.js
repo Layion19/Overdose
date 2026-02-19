@@ -29,7 +29,7 @@ let maxRows = 0;
 /* ================= CLICK EXPERIENCE ================= */
 
 document.body.addEventListener("click", () => {
-  if (platformOpened) return;
+  if (platformOpened || autoModeActive) return;
   clickCount++;
   spawnCapsuleMirror(); // effet miroir : 2 capsules à la fois (gauche + droite)
   updateManualText();

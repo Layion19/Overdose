@@ -45,6 +45,7 @@ function updateManualText() {
     renderText(mainText.slice(0, letterIndex + 1));
   }
   if (clickCount === 5) {
+    autoModeActive = true;
     startAutoMode();
   }
 }

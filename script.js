@@ -61,15 +61,15 @@ function renderText(text) {
 /* ================= CAPSULE SYSTEM ================= */
 
 function computeLayout() {
-  const capsuleWidth = 130;
   const screenWidth = window.innerWidth;
   const screenHeight = window.innerHeight;
+  // Responsive : ~10 colonnes sur desktop, ~7 sur mobile
+  const capsuleWidth = Math.round(screenWidth / 10);
   capsulesPerRow = Math.round(screenWidth / capsuleWidth);
-  const actualWidth = screenWidth / capsulesPerRow; // largeur réelle par capsule, pas de dépassement
   const coverageHeight = screenHeight * 0.45;
   const rowHeight = capsuleWidth * 0.22;
   maxRows = Math.floor(coverageHeight / rowHeight);
-  return { capsuleWidth: actualWidth, screenWidth, screenHeight, rowHeight };
+  return { capsuleWidth, screenWidth, screenHeight, rowHeight };
 }
 
 /* Place une capsule à un index donné dans la grille */

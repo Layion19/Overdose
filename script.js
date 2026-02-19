@@ -1,5 +1,6 @@
 let clickCount = 0;
 let platformOpened = false;
+let autoModeActive = false;
 
 const textContainer = document.getElementById("textContainer");
 const banner = document.querySelector("#banner img");
